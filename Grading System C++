@@ -1,0 +1,538 @@
+#include <iostream>
+#include<vector>
+#include<algorithm>
+using namespace std;
+
+class Academic_Record
+{
+protected:
+
+string firstName, lastName;
+double roll_no;   
+int stream;
+int opt_sub, addtl_sub;
+double sub_marks1, sub_marks2, sub_marks3, sub_marks4, optional_marks, additional_marks, total_acad_marks;
+double acad_percent, acad_gpa;
+
+public:
+
+static int counter;
+/*use static variable here to preserve count of no. of objects*/
+
+void user_input()   /*Making it a Constructor because its mandatory to execute this for every student as soon as student record(oject) is created*/
+{
+cout<<"Enter the First Name, Last Name and Roll Number of student number "<<counter + 1<<endl;
+cin>>firstName>>lastName>>roll_no;
+counter++;
+}
+
+void Medical_marks_input()
+{
+cout<<"Enter Marks attained in Physics"<<endl;
+cin>>sub_marks1;
+
+cout<<"Enter marks attained in Chemistry"<<endl;
+cin>>sub_marks2;
+
+cout<<"Enter marks attained in Biology"<<endl;
+cin>>sub_marks3;
+
+cout<<"Enter marks attained in English"<<endl;
+cin>>sub_marks4;
+
+}
+
+void NonMed_marks_input()
+{
+cout<<"Enter the marks attained in Physics"<<endl;
+cin>>sub_marks1;
+
+cout<<"Enter marks attained in Chemistry"<<endl;
+cin>>sub_marks2;
+
+cout<<"Enter marks attained in Maths"<<endl;
+cin>>sub_marks3;
+
+cout<<"Enter the marks attained in English"<<endl;
+cin>>sub_marks4;
+
+}
+
+void Commerce_marks_input()
+{
+cout<<"Enter the marks attained in Accountancy"<<endl;
+cin>>sub_marks1;
+
+cout<<"Enter the marks attained in Business Studies"<<endl;
+cin>>sub_marks2;
+
+cout<<"Enter the marks attained in Economics"<<endl;
+cin>>sub_marks3;
+
+cout<<"Enter the marks attained in English"<<endl;
+cin>>sub_marks4;
+}
+
+void Humanities_marks_input()
+{
+cout<<"Enter the marks attained in History"<<endl;
+cin>>sub_marks1;
+
+cout<<"Enter the marks attained in Political Science"<<endl;
+cin>>sub_marks2;
+
+cout<<"Enter the marks attained in Geography"<<endl;
+cin>>sub_marks3;
+
+cout<<"Enter the marks attained in English"<<endl;
+cin>>sub_marks4;
+
+}
+
+void optional_marks_input()
+{
+cout<<"Select Optional Subject from the given list "<<endl;
+cout<<"1 - Physical Education"<<endl<<"2 - Punjabi"<<endl<<"3 - Hindi"<<endl<<"4 - Computer Science(IT)"<<endl<<"5 - Psychology"<<endl<<"6 - Sociology"<<endl<<"7 - Biotechnology"<<endl;
+
+cin>>opt_sub;
+
+cout<<"Enter marks attained in Optional subject"<<endl;
+cin>>optional_marks;
+}
+
+void additional_marks_input()
+{
+cout<<"Select Additional Subject from the following list(if any)"<<endl;
+cout<<"1 - Maths(For Medical Stream)"<<endl<<"2 - Biology(For Non Medical Stream"<<endl<<"4 - NO Additional Subject"<<endl;
+cin>>addtl_sub;
+
+if(addtl_sub != 4)
+{
+cout<<"Enter marks in Additional Subject"<<endl;
+cin>>additional_marks;
+}
+else
+{
+    additional_marks = 0;
+}
+
+}
+
+void stream_selection()
+{
+cout<<"Select Stream as per the choices given below: "<<endl;
+cout<<"1 - Medical"<<endl<<"2 - Non Medical"<<endl<<"3 - Commerce"<<endl<<"4 - Humanities"<<endl;
+cin>>stream;
+
+switch(stream)
+{
+  case 1:
+       Medical_marks_input();
+         break;
+ /*call function for optional subject mark display and additional subject also marks input in each if else block*/
+  case 2:
+       NonMed_marks_input();
+         break;
+  case 3:
+       Commerce_marks_input();
+         break;
+  case 4:
+     Humanities_marks_input();
+         break;
+}
+}
+
+void Academic_grade_display()
+{
+if(additional_marks != 0)
+{
+total_acad_marks = sub_marks1 + sub_marks2 + sub_marks3 + sub_marks4 + optional_marks + additional_marks;
+acad_percent = total_acad_marks/6;
+}
+else
+{
+total_acad_marks = sub_marks1 + sub_marks2 + sub_marks3 + sub_marks4 + optional_marks;
+acad_percent = total_acad_marks/5;
+}
+acad_gpa = acad_percent/9.5;
+
+cout<<"The academic percentage of the student is "<<acad_percent<<"and GPA is "<<acad_gpa<<endl<<endl;
+}
+
+double acad_percentage_Access()   /*as acad_percent is a Protected Variable, we need a public function which returns its value in order to access its
+                                    outside the scope of class*/
+{
+  return acad_percent;  
+}
+};
+
+int Academic_Record :: counter = 0; /*Defining Static Variable to prove that its associated with a particular class and its members.....also initialising it to 0;*/
+
+
+class Sports_Record
+{
+protected:
+
+string game;
+double sport_marks;
+int level, medal, choice;
+
+public:
+
+void sports_info()
+{
+cout<<"Enter the Sport which the student has played"<<endl;
+cin>>game;
+
+cout<<"Upto which level has the student played"<<endl;
+cout<<"1 - District"<<endl<<"2 - State"<<endl<<"3 - National"<<endl<<"4 - International"<<endl;
+cin>>level;
+
+cout<<"Which Medal has the Student Won?"<<endl;
+cout<<"1 - Gold"<<endl<<"2 - Silver"<<endl<<"3 - Bronze"<<endl<<"4 - Only Participation"<<endl;
+cin>>medal;
+}
+
+void Sports_Input_and_marking()
+{
+cout<<"Has the student been indulged in any professional sports before?"<<endl<<"1 - Yes"<<endl<<"2 - No"<<endl;
+cin>>choice;
+
+switch(choice)
+{
+  case 2:
+     sport_marks = 0;
+     break;
+  
+  default:                 /*Default here means any value of variable other than that mentioned in above written Case*/
+     sports_info();             
+     break;
+}
+
+switch(level)
+{
+  case 1:
+    switch(medal)
+    {
+      case 0:
+           sport_marks = 0;
+           break;
+      default:
+           sport_marks = 5;
+           break;
+    }
+    break;
+  
+  case 2:
+      switch(medal)
+      {
+        case 0:
+            sport_marks = 10;
+            break;
+        case 3:
+            sport_marks = 15;
+            break;
+        case 2:
+            sport_marks = 20;
+            break;
+        case 1:
+            sport_marks = 25;
+            break;
+      }
+    break;
+    
+  case 3:
+      switch(medal)
+      {
+        case 0:
+             sport_marks = 30;
+             break;
+        
+        case 3:
+             sport_marks = 35;
+             break;
+        case 2:
+             sport_marks = 40;
+             break;
+        case 1:
+             sport_marks = 45;
+             break;
+      }
+      break;
+      
+  case 4:
+      if(medal != 0)
+      {
+        sport_marks = 50;
+      }
+  break;
+  
+}
+
+
+}
+
+};
+
+class Final_Result : public Academic_Record , public Sports_Record
+{
+protected:
+
+double Total_Percentage, Total_GPA;
+int user_choice;
+
+
+public:
+
+static int count;
+
+friend void student_details_search(Final_Result &object);
+
+void Aggregate_Result()
+{
+ if(additional_marks != 0)
+ {
+Total_Percentage = (total_acad_marks + sport_marks)/6;
+ }
+ else
+ {
+Total_Percentage = (total_acad_marks + sport_marks)/5;
+ }
+Total_GPA = Total_Percentage/9.5;
+}
+
+void Display_Total_Result()
+{
+    cout<<"The total percentage of student no."<<count + 1<<" is "<<Total_Percentage<<" and total GPA is "<<Total_GPA<<endl<<endl;
+     /*Add Static variable here to display no. of student*/
+     count++;
+}
+
+double total_percentage_Access()   /*As Total_Percentage is a Protected variable, we need a public function which returns its value, in order to access its 
+                                     outside the scope of the class*/
+{
+   return Total_Percentage;
+}
+};
+
+/*below func detail search logic still under question*/
+void student_details_search(Final_Result &object)
+{
+double student_roll_no;
+cout<<"Enter the Name of student whose details have to be displayed"<<endl;
+cin>>student_roll_no;
+
+if(object.roll_no == student_roll_no)
+{
+    cout<<"The student with name "<<object.firstName+ object.lastName<<", roll number"<<object.roll_no<<"has secured "<<object.acad_percent<<" and total "<<object.Total_Percentage;
+}
+} /*Making this func as friend of derived class so that its able to access object
+                                                           details for this class.....like name of that particular student, roll no of that
+                                                    particular student*/
+                  
+
+
+int Vector_Search(vector<double> a_vector)  /* to find the no. of students having less than/greater than a particular percentage*/
+{
+int i, search_percent;
+int counting = 0;
+
+cout<<"Enter the percentage below which number of students is to be displayed"<<endl;
+cin>>search_percent;
+
+for(i = 0; i<a_vector.size(); i++)
+{
+ if(a_vector[i] < search_percent)
+ {
+   counting++;
+ }
+}
+return counting;
+}
+
+int vector_search_2(vector<double> b_vector)
+{
+int i, percent_search;
+int counting_2 = 0;
+
+cout<<"Enter the percentage below which number of students is to be displayed"<<endl;
+cin>>percent_search;
+
+for(i = 0; i<b_vector.size(); i++)
+{
+ if(b_vector[i] > percent_search)
+ {
+  counting_2++;
+ }
+}
+return counting_2;
+
+}
+
+int no_students_passing(vector<double> c_vector)
+{
+int i;
+int pass_Students = 0;
+for(i = 0; i<c_vector.size(); i++)
+{
+  if(c_vector[i] > 40)
+  {
+    pass_Students++;
+  }
+}
+ return pass_Students;
+}
+
+int students_same_percentage(vector<double> d_vector)
+{
+int i, x_percentage;
+int count_number = 0;
+for(i = 0; i<d_vector.size(); i++)
+{
+ if(d_vector[i] == x_percentage)
+ {
+  count_number++;
+ }
+}
+return count_number;
+}
+
+int Final_Result :: count = 0;
+
+
+void Operations_Execution(vector<double> any_vector)  /*to be execute within the main function in a while loop while user_choice != 0*/
+{
+int operation_choice;
+int less_than_Xpercent, greater_than_Xpercent;
+
+cout<<"Choose the desired function to be performed as per the choices listed below"<<endl;
+cout<<"1 - To Find Percentage and other details of 1st Rank Holder"<<endl;
+cout<<"2 - To Find the Number of Students getting less than X Percentage (X to be input by user)"<<endl<<"3 - To Find NNumber of Students getting greater than X percentage"<<endl;
+cout<<"4 - To Find the Number of Students who Passed"<<endl<<"5 - To Find the Number of Students who Failed"<<endl;
+cout<<"6 - To Find Number of Students getting a particular percentage"<<endl;
+
+cin>>operation_choice;
+
+switch(operation_choice)
+{
+  case 0:
+       exit(0);
+       break;
+  case 1:
+       sort(any_vector.begin() , any_vector.end());
+       cout<<"The topper has attained "<<any_vector.back();
+       cout<<endl;
+       cout<<"the total number of students is "<<any_vector.size();
+       break;
+  case 2:
+       less_than_Xpercent = Vector_Search(any_vector);
+       cout<<"There are "<<less_than_Xpercent<<" students scoring less than the percentage entered"<<endl;
+       break;
+  case 3:
+       greater_than_Xpercent = vector_search_2(any_vector);
+       cout<<"There are "<<greater_than_Xpercent<<" students scoring greater than the entered percentage"<<endl;
+       break;
+  case 4:
+        cout<<"The number of students who passed are "<<no_students_passing(any_vector);
+        break;
+  case 5:
+        cout<<"The number of students failed are "<<any_vector.size() - no_students_passing(any_vector);
+        break;
+  case 6:
+        cout<<"The numbers of students with same percentage are "<<students_same_percentage(any_vector);
+        break;
+  
+        
+  
+}
+}
+
+
+
+/*class finish*/
+
+/*this friend function definition and logic still under consideration*/
+
+
+int main()
+{
+int i, enter;
+char user_choice, element;
+double student_acad_percent, student_total_percent;
+
+Final_Result student;
+
+vector<double> academic_array;  /*Dynamically allocating memory for these arrays as their size gets known at the runtime via user input*/
+vector<double> percentage_array;
+
+cout<<"Enter 0 at any moment to Exit the Console"<<endl;
+cout<<"Press 'X' if you wish to move to statistical operationas list of console once all students data is entered"<<endl;
+
+do
+
+{
+   
+    cout<<"Press any Key to continue"<<endl;
+    cin>>user_choice;
+    
+        element = user_choice;
+        
+    if(element == '0')
+    {
+    exit(0);
+    }
+   else if(element == 'x' || element == 'X')
+    {
+    Operations_Execution(percentage_array);
+    cout<<"Enter 7 if you any student's details to be displayed"<<endl;
+    
+    cin>>enter;
+    
+    if(enter == 7)
+    {
+    student_details_search(student);   /*Calling Friend Function specifically Post Object Creation*/
+    }
+    }
+    
+student.user_input();
+student.stream_selection();
+student.optional_marks_input();
+student.additional_marks_input();
+student.Academic_grade_display();
+
+    student_acad_percent  = student.acad_percentage_Access();  /*Protected variable being returned by this function, getting stored in another variable*/
+    
+student.Sports_Input_and_marking();
+student.Aggregate_Result();
+
+    student_total_percent =  student.total_percentage_Access();
+    
+    academic_array.push_back(student_acad_percent);    /*Side by Side creating two linear vectors storing academic percentage and total percentage of each student object as their element*/
+    percentage_array.push_back(student_total_percent);     
+
+
+
+student.Display_Total_Result();
+
+Final_Result student;
+
+
+}
+while(element != '0');
+
+ return 0;
+}
+
+/*enter statements to cout the percentage of first rank.......static variable to count no. of students........binary search to cout percentage
+of X rank holder where X is given by user.......and to check what rank is at Y percentage where Y is given by user.......also the names and roll 
+numbers of concerned searched student*/
+
+
+
+
+
+
+
+
+
+
